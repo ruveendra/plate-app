@@ -49,15 +49,87 @@
 
 //---------------plugins-----------------------
 
+// import React from 'react';
+// import {
+//   createBlockquotePlugin,
+//   createBoldPlugin,
+//   createCodeBlockPlugin,
+//   createCodePlugin,
+//   createHeadingPlugin,
+//   createItalicPlugin,
+//   createParagraphPlugin,
+//   createStrikethroughPlugin,
+//   createUnderlinePlugin,
+//   Plate,
+// } from '@udecode/plate';
+// import { basicElementsValue } from './basicElementsValue';
+// import { basicMarksValue } from './basicMarksValue';
+// import { editableProps } from './editableProps';
+// import { MyPlatePlugin, MyValue } from './plateTypes';
+// import {
+//   ELEMENT_BLOCKQUOTE,
+//   ELEMENT_CODE_BLOCK,
+//   ELEMENT_CODE_LINE,
+//   ELEMENT_H1,
+//   ELEMENT_H2,
+//   ELEMENT_H3,
+//   ELEMENT_H4,
+//   ELEMENT_H5,
+//   ELEMENT_H6,
+//   ELEMENT_LI,
+//   ELEMENT_LIC,
+//   ELEMENT_LINK,
+//   ELEMENT_OL,
+//   ELEMENT_PARAGRAPH,
+//   ELEMENT_TABLE,
+//   ELEMENT_TD,
+//   ELEMENT_TH,
+//   ELEMENT_TODO_LI,
+//   ELEMENT_TR,
+//   ELEMENT_UL,
+//   MARK_BOLD,
+//   MARK_CODE,
+//   MARK_HIGHLIGHT,
+//   MARK_ITALIC,
+//   MARK_KBD,
+//   MARK_STRIKETHROUGH,
+//   MARK_SUBSCRIPT,
+//   MARK_SUPERSCRIPT,
+//   MARK_UNDERLINE,
+// } from '@udecode/plate'
+
+// const plugins: MyPlatePlugin[] = [ 
+//   createParagraphPlugin({key: ELEMENT_PARAGRAPH,}),
+//   createBlockquotePlugin(),
+//   createCodeBlockPlugin(),
+//   createHeadingPlugin(),
+
+//   createBoldPlugin(),
+//   createItalicPlugin(),
+//   createUnderlinePlugin(),
+//   createStrikethroughPlugin(),
+//   createCodePlugin(),
+// ];
+
+// export default () => (
+//   <Plate<MyValue>
+//     editableProps={editableProps}
+//     initialValue={[...basicElementsValue, ...basicMarksValue, ]}
+//     plugins={plugins}
+//   />
+// );
+
+//..............with Styles...............
+
 import React from 'react';
 import {
   createBlockquotePlugin,
   createBoldPlugin,
-  createCodeBlockPlugin,
   createCodePlugin,
   createHeadingPlugin,
   createItalicPlugin,
   createParagraphPlugin,
+  createPlugins,
   createStrikethroughPlugin,
   createUnderlinePlugin,
   Plate,
@@ -65,56 +137,36 @@ import {
 import { basicElementsValue } from './basicElementsValue';
 import { basicMarksValue } from './basicMarksValue';
 import { editableProps } from './editableProps';
-import { MyPlatePlugin, MyValue } from './plateTypes';
-import {
-  ELEMENT_BLOCKQUOTE,
-  ELEMENT_CODE_BLOCK,
-  ELEMENT_CODE_LINE,
-  ELEMENT_H1,
-  ELEMENT_H2,
-  ELEMENT_H3,
-  ELEMENT_H4,
-  ELEMENT_H5,
-  ELEMENT_H6,
-  ELEMENT_LI,
-  ELEMENT_LIC,
-  ELEMENT_LINK,
-  ELEMENT_OL,
-  ELEMENT_PARAGRAPH,
-  ELEMENT_TABLE,
-  ELEMENT_TD,
-  ELEMENT_TH,
-  ELEMENT_TODO_LI,
-  ELEMENT_TR,
-  ELEMENT_UL,
-  MARK_BOLD,
-  MARK_CODE,
-  MARK_HIGHLIGHT,
-  MARK_ITALIC,
-  MARK_KBD,
-  MARK_STRIKETHROUGH,
-  MARK_SUBSCRIPT,
-  MARK_SUPERSCRIPT,
-  MARK_UNDERLINE,
-} from '@udecode/plate'
+import { plateUI } from './plateUI';
+import { MyValue } from './plateTypes';
 
-const plugins: MyPlatePlugin[] = [ 
-  createParagraphPlugin({key: ELEMENT_PARAGRAPH,}),
-  createBlockquotePlugin(),
-  createCodeBlockPlugin(),
-  createHeadingPlugin({key: ELEMENT_H1,}),
+// try to remove a few plugins!
+const plugins = createPlugins<MyValue>(
+  [
+    createParagraphPlugin(),
+    createBlockquotePlugin(),
+    // createCodeBlockPlugin({
+    //   // You can either pass a component per plugin
+    //   component: CodeBlockElement,
+    // }),
+    createHeadingPlugin(),
 
-  createBoldPlugin(),
-  createItalicPlugin(),
-  createUnderlinePlugin(),
-  createStrikethroughPlugin(),
-  createCodePlugin(),
-];
+    createBoldPlugin(),
+    createItalicPlugin(),
+    createUnderlinePlugin(),
+    createStrikethroughPlugin(),
+    createCodePlugin(),
+  ],
+  {
+    // Or pass all components at once
+    components: plateUI,
+  }
+);
 
 export default () => (
   <Plate<MyValue>
     editableProps={editableProps}
-    initialValue={[...basicElementsValue, ...basicMarksValue, ]}
+    initialValue={[...basicElementsValue, ...basicMarksValue]}
     plugins={plugins}
   />
 );
@@ -194,3 +246,4 @@ export default () => (
 //     children: [{ text: '' }],
 //   },
 // ];
+
