@@ -24,32 +24,104 @@
 
 //------------- Handlers ---------------
 
-import React, { useState } from 'react';
-import { Plate } from '@udecode/plate';
-import { plainTextValue } from './plainTextValue';
+// import React, { useState } from 'react';
+// import { Plate } from '@udecode/plate';
+// import { plainTextValue } from './plainTextValue';
+// import { editableProps } from './editableProps';
+// import { MyValue } from './plateTypes';
+
+// export default () => {
+//   const [debugValue, setDebugValue] = useState<MyValue | null>(null);
+
+//   return (
+//     <Plate<MyValue>
+//       editableProps={editableProps}
+//       // initialValue={plainTextValue}
+//       onChange={(newValue) => {
+//         setDebugValue(newValue);
+//         // save newValue...
+//       }}
+//     >
+//       value: {JSON.stringify(debugValue)} 
+//     </Plate>
+//   );
+// };
+
+//---------------plugins-----------------------
+
+import React from 'react';
+import {
+  createBlockquotePlugin,
+  createBoldPlugin,
+  createCodeBlockPlugin,
+  createCodePlugin,
+  createHeadingPlugin,
+  createItalicPlugin,
+  createParagraphPlugin,
+  createStrikethroughPlugin,
+  createUnderlinePlugin,
+  Plate,
+} from '@udecode/plate';
+import { basicElementsValue } from './basicElementsValue';
+import { basicMarksValue } from './basicMarksValue';
 import { editableProps } from './editableProps';
-import { MyValue } from './plateTypes';
+import { MyPlatePlugin, MyValue } from './plateTypes';
+import {
+  ELEMENT_BLOCKQUOTE,
+  ELEMENT_CODE_BLOCK,
+  ELEMENT_CODE_LINE,
+  ELEMENT_H1,
+  ELEMENT_H2,
+  ELEMENT_H3,
+  ELEMENT_H4,
+  ELEMENT_H5,
+  ELEMENT_H6,
+  ELEMENT_LI,
+  ELEMENT_LIC,
+  ELEMENT_LINK,
+  ELEMENT_OL,
+  ELEMENT_PARAGRAPH,
+  ELEMENT_TABLE,
+  ELEMENT_TD,
+  ELEMENT_TH,
+  ELEMENT_TODO_LI,
+  ELEMENT_TR,
+  ELEMENT_UL,
+  MARK_BOLD,
+  MARK_CODE,
+  MARK_HIGHLIGHT,
+  MARK_ITALIC,
+  MARK_KBD,
+  MARK_STRIKETHROUGH,
+  MARK_SUBSCRIPT,
+  MARK_SUPERSCRIPT,
+  MARK_UNDERLINE,
+} from '@udecode/plate'
 
-export default () => {
-  const [debugValue, setDebugValue] = useState<MyValue | null>(null);
+const plugins: MyPlatePlugin[] = [ 
+  createParagraphPlugin({key: ELEMENT_PARAGRAPH,}),
+  createBlockquotePlugin(),
+  createCodeBlockPlugin(),
+  createHeadingPlugin({key: ELEMENT_H1,}),
 
-  return (
-    <Plate<MyValue>
-      editableProps={editableProps}
-      initialValue={plainTextValue}
-      onChange={(newValue) => {
-        setDebugValue(newValue);
-        // save newValue...
-      }}
-    >
-      value: {JSON.stringify(debugValue)} //why convert to json 
-    </Plate>
-  );
-};
+  createBoldPlugin(),
+  createItalicPlugin(),
+  createUnderlinePlugin(),
+  createStrikethroughPlugin(),
+  createCodePlugin(),
+];
+
+export default () => (
+  <Plate<MyValue>
+    editableProps={editableProps}
+    initialValue={[...basicElementsValue, ...basicMarksValue, ]}
+    plugins={plugins}
+  />
+);
 
 
 
-///////// ---typescript---------
+//-------------typescript---------
 
 
 // import React, { useState } from 'react';
